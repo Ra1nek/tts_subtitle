@@ -61,14 +61,14 @@ python src/preprocess.py data/
 ```bash
 python src/train.py config/config.json
 ```
-Этот скрипт обучает модель с использованием конфигурации из **config/config.json**.
+Этот скрипт обучает модель с использованием конфигурации из **`config/config.json`**.
 ### 3. Генерация векторного представления:
 ```bash
 python src/generate.py data/sample.wav models/speaker_encoder.pth models/speaker_embedding.pkl
 ```
-Этот скрипт генерирует векторное представление из файла **sample.wav** и сохраняет его в **speaker_embedding.pkl**.
+Этот скрипт генерирует векторное представление из файла **`sample.wav`** и сохраняет его в **`speaker_embedding.pkl`**.
 ### 4. Синтез речи:
 ```bash
 python src/synthesize.py subtitles.srt models/speaker_embedding.pkl
 ```
-Этот скрипт синтезирует речь на основе субтитров из файла **subtitles.srt** и векторного представления из **speaker_embedding.pkl**.
+Этот скрипт синтезирует речь на основе субтитров из файла **`subtitles.srt`** и векторного представления из **`speaker_embedding.pkl`**.
