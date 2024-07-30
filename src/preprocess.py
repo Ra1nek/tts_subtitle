@@ -1,4 +1,5 @@
 import os
+import sys
 import librosa
 import soundfile as sf
 import pandas as pd
@@ -26,5 +27,9 @@ def preprocess_audio(data_dir, output_sr=22050):
     df.to_csv(metadata_path, index=False)
 
 if __name__ == "__main__":
-    data_dir = input("Enter path to data directory: ")
+    if len(sys.argv) != 2:
+        print("Usage: python preprocess.py <path_to_data_directory>")
+        sys.exit(1)
+
+    data_dir = sys.argv[1]
     preprocess_audio(data_dir)
