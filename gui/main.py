@@ -1,5 +1,7 @@
+# gui/main.py
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import os
 import subprocess
 
 class TTSApp:
@@ -36,49 +38,33 @@ class TTSApp:
 
     def browse_data_dir(self):
         data_dir = filedialog.askdirectory()
-        self.data_dir_entry.delete(0, tk.END)
         self.data_dir_entry.insert(0, data_dir)
 
     def preprocess_data(self):
         data_dir = self.data_dir_entry.get()
         if data_dir:
-            result = subprocess.run(["python", "src/preprocess.py", data_dir], capture_output=True, text=True)
-            if result.returncode == 0:
-                messagebox.showinfo("Информация", "Предварительная обработка данных завершена")
-            else:
-                messagebox.showerror("Ошибка", f"Ошибка при обработке данных:\n{result.stderr}")
+            subprocess.run(["python", "src/preprocess.py", data_dir])
+            messagebox.showinfo("Информация", "Предварительная обработка данных завершена")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите директорию с данными")
 
     def train_model(self):
-        config_path = "config/config.json"
-        result = subprocess.run(["python", "src/train.py", config_path], capture_output=True, text=True)
-        if result.returncode == 0:
-            messagebox.showinfo("Информация", "Обучение модели завершено")
-        else:
-            messagebox.showerror("Ошибка", f"Ошибка при обучении модели:\n{result.stderr}")
+        subprocess.run(["python", "src/train.py"])
+        messagebox.showinfo("Информация", "Обучение модели завершено")
 
     def generate_embedding(self):
         audio_path = filedialog.askopenfilename(title="Выберите образец голоса", filetypes=[("WAV файлы", "*.wav")])
         if audio_path:
-            model_path = "models/speaker_encoder.pth"
-            output_path = "models/speaker_embedding.pkl"
-            result = subprocess.run(["python", "src/generate.py", audio_path, model_path, output_path], capture_output=True, text=True)
-            if result.returncode == 0:
-                messagebox.showinfo("Информация", "Векторное представление голоса сгенерировано")
-            else:
-                messagebox.showerror("Ошибка", f"Ошибка при генерации embedding:\n{result.stderr}")
+            subprocess.run(["python", "src/generate.py", audio_path])
+            messagebox.showinfo("Информация", "Векторное представление голоса сгенерировано")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите аудиофайл")
 
     def synthesize_speech(self):
         srt_path = filedialog.askopenfilename(title="Выберите файл субтитров", filetypes=[("SRT файлы", "*.srt")])
         if srt_path:
-            result = subprocess.run(["python", "src/synthesize.py", srt_path], capture_output=True, text=True)
-            if result.returncode == 0:
-                messagebox.showinfo("Информация", "Синтез речи завершен")
-            else:
-                messagebox.showerror("Ошибка", f"Ошибка при синтезе речи:\n{result.stderr}")
+            subprocess.run(["python", "src/synthesize.py", srt_path])
+            messagebox.showinfo("Информация", "Синтез речи завершен")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите файл субтитров")
 
