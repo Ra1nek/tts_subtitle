@@ -1,0 +1,6 @@
+TTS
+torch
+torchaudio
+librosa
+pydub
+srt
