@@ -1,4 +1,3 @@
-# gui/main.py
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
@@ -38,6 +37,7 @@ class TTSApp:
 
     def browse_data_dir(self):
         data_dir = filedialog.askdirectory()
+        self.data_dir_entry.delete(0, tk.END)
         self.data_dir_entry.insert(0, data_dir)
 
     def preprocess_data(self):
