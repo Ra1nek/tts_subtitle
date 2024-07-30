@@ -1,13 +1,15 @@
-import sys
 import os
 import librosa
 import soundfile as sf
 import pandas as pd
 
 def preprocess_audio(data_dir, output_sr=22050):
-    wav_dir = os.path.join(data_dir, 'audio')  # Предполагаем, что аудиофайлы находятся в папке 'audio'
+    wav_dir = os.path.join(data_dir, 'wavs')
     metadata_path = os.path.join(data_dir, 'metadata.csv')
     metadata = []
+
+    if not os.path.exists(wav_dir):
+        raise FileNotFoundError(f"Directory {wav_dir} does not exist")
 
     for filename in os.listdir(wav_dir):
         if filename.endswith('.wav'):
@@ -24,8 +26,5 @@ def preprocess_audio(data_dir, output_sr=22050):
     df.to_csv(metadata_path, index=False)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python preprocess.py <data_dir>")
-        sys.exit(1)
-    data_dir = sys.argv[1]
+    data_dir = input("Enter path to data directory: ")
     preprocess_audio(data_dir)
