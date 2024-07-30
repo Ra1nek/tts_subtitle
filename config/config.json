@@ -1,0 +1,24 @@
+{
+    "run_name": "my_tts_model",
+    "output_path": "output/",
+    "num_loader_workers": 8,
+    "num_val_loader_workers": 4,
+    "batch_size": 32,
+    "eval_batch_size": 16,
+    "run_eval": true,
+    "test_delay_epochs": 10,
+    "epochs": 500,
+    "text_cleaner": "basic_cleaners",
+    "use_phonemes": false,
+    "phoneme_language": null,
+    "phoneme_cache_path": "phoneme_cache/",
+    "phoneme_cleaner": "basic_cleaners",
+    "datasets": [
+        {
+            "name": "dataset",
+            "path": "dataset/",
+            "meta_file_train": "dataset/transcripts.txt",
+            "meta_file_val": "dataset/transcripts.txt"
+        }
+    ]
+}
