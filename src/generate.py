@@ -1,11 +1,11 @@
 import sys
 from TTS.utils.speaker import SpeakerManager
+from voice_embedding import save_embedding
 
 def generate_embedding(audio_path, model_path, output_path):
     speaker_manager = SpeakerManager(encoder_model_path=model_path)
     embedding = speaker_manager.compute_embedding_from_file(audio_path)
-    with open(output_path, 'wb') as f:
-        f.write(embedding)
+    save_embedding(embedding, output_path)
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
