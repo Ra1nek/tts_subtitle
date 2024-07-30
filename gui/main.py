@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
 import subprocess
+import sys
 
 class TTSApp:
     def __init__(self, root):
@@ -43,19 +44,22 @@ class TTSApp:
     def preprocess_data(self):
         data_dir = self.data_dir_entry.get()
         if data_dir:
-            subprocess.run(["python", "src/preprocess.py", data_dir])
+            script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'preprocess.py')
+            subprocess.run([sys.executable, script_path, data_dir])
             messagebox.showinfo("Информация", "Предварительная обработка данных завершена")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите директорию с данными")
 
     def train_model(self):
-        subprocess.run(["python", "src/train.py"])
+        script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'train.py')
+        subprocess.run([sys.executable, script_path])
         messagebox.showinfo("Информация", "Обучение модели завершено")
 
     def generate_embedding(self):
         audio_path = filedialog.askopenfilename(title="Выберите образец голоса", filetypes=[("WAV файлы", "*.wav")])
         if audio_path:
-            subprocess.run(["python", "src/generate.py", audio_path])
+            script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'generate.py')
+            subprocess.run([sys.executable, script_path, audio_path])
             messagebox.showinfo("Информация", "Векторное представление голоса сгенерировано")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите аудиофайл")
@@ -63,7 +67,8 @@ class TTSApp:
     def synthesize_speech(self):
         srt_path = filedialog.askopenfilename(title="Выберите файл субтитров", filetypes=[("SRT файлы", "*.srt")])
         if srt_path:
-            subprocess.run(["python", "src/synthesize.py", srt_path])
+            script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'synthesize.py')
+            subprocess.run([sys.executable, script_path, srt_path])
             messagebox.showinfo("Информация", "Синтез речи завершен")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите файл субтитров")
