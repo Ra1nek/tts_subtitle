@@ -45,22 +45,31 @@ class TTSApp:
         data_dir = self.data_dir_entry.get()
         if data_dir:
             script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'preprocess.py')
-            subprocess.run([sys.executable, script_path, data_dir])
-            messagebox.showinfo("Информация", "Предварительная обработка данных завершена")
+            result = subprocess.run([sys.executable, script_path, data_dir], capture_output=True, text=True)
+            if result.returncode == 0:
+                messagebox.showinfo("Информация", "Предварительная обработка данных завершена")
+            else:
+                messagebox.showerror("Ошибка", f"Ошибка при предварительной обработке данных:\n{result.stderr}")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите директорию с данными")
 
     def train_model(self):
         script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'train.py')
-        subprocess.run([sys.executable, script_path])
-        messagebox.showinfo("Информация", "Обучение модели завершено")
+        result = subprocess.run([sys.executable, script_path], capture_output=True, text=True)
+        if result.returncode == 0:
+            messagebox.showinfo("Информация", "Обучение модели завершено")
+        else:
+            messagebox.showerror("Ошибка", f"Ошибка при обучении модели:\n{result.stderr}")
 
     def generate_embedding(self):
         audio_path = filedialog.askopenfilename(title="Выберите образец голоса", filetypes=[("WAV файлы", "*.wav")])
         if audio_path:
             script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'generate.py')
-            subprocess.run([sys.executable, script_path, audio_path])
-            messagebox.showinfo("Информация", "Векторное представление голоса сгенерировано")
+            result = subprocess.run([sys.executable, script_path, audio_path], capture_output=True, text=True)
+            if result.returncode == 0:
+                messagebox.showinfo("Информация", "Векторное представление голоса сгенерировано")
+            else:
+                messagebox.showerror("Ошибка", f"Ошибка при генерации векторного представления:\n{result.stderr}")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите аудиофайл")
 
@@ -68,8 +77,11 @@ class TTSApp:
         srt_path = filedialog.askopenfilename(title="Выберите файл субтитров", filetypes=[("SRT файлы", "*.srt")])
         if srt_path:
             script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'synthesize.py')
-            subprocess.run([sys.executable, script_path, srt_path])
-            messagebox.showinfo("Информация", "Синтез речи завершен")
+            result = subprocess.run([sys.executable, script_path, srt_path], capture_output=True, text=True)
+            if result.returncode == 0:
+                messagebox.showinfo("Информация", "Синтез речи завершен")
+            else:
+                messagebox.showerror("Ошибка", f"Ошибка при синтезе речи:\n{result.stderr}")
         else:
             messagebox.showwarning("Предупреждение", "Пожалуйста, выберите файл субтитров")
 
