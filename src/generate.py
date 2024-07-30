@@ -1,4 +1,4 @@
-# scripts/generate.py
+import sys
 from TTS.utils.speaker import SpeakerManager
 
 def generate_embedding(audio_path, model_path, output_path):
@@ -8,7 +8,10 @@ def generate_embedding(audio_path, model_path, output_path):
         f.write(embedding)
 
 if __name__ == "__main__":
-    audio_path = "path/to/speaker_sample.wav"
-    model_path = "models/speaker_encoder.pth"
-    output_path = "models/speaker_embedding.pkl"
+    if len(sys.argv) != 4:
+        print("Usage: python generate.py <audio_path> <model_path> <output_path>")
+        sys.exit(1)
+    audio_path = sys.argv[1]
+    model_path = sys.argv[2]
+    output_path = sys.argv[3]
     generate_embedding(audio_path, model_path, output_path)
