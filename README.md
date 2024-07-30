@@ -48,12 +48,34 @@ python src/preprocess.py <путь_к_директории_с_данными>
 python src/train.py <путь_к_файлу_конфигурации>
 ```
 ### Генерация векторного представления:
-
 ```bash
 python src/generate.py <путь_к_аудиофайлу> <путь_к_модели> <путь_к_файлу_с_вектором>
 ```
 ### Синтез речи:
-
 ```bash
 python src/synthesize.py <путь_к_файлу_субтитров> <путь_к_файлу_с_вектором>
 ```
+Примеры
+1. Предварительная обработка данных:
+```bash
+python src/preprocess.py data/
+```
+Этот скрипт обрабатывает аудиофайлы в директории data/ и создает метаданные.
+
+2. Обучение модели:
+```bash
+python src/train.py config/config.json
+```
+Этот скрипт обучает модель с использованием конфигурации из config/config.json.
+
+3. Генерация векторного представления:
+```bash
+python src/generate.py data/sample.wav models/speaker_encoder.pth models/speaker_embedding.pkl
+```
+Этот скрипт генерирует векторное представление из файла sample.wav и сохраняет его в speaker_embedding.pkl.
+
+4. Синтез речи:
+```bash
+python src/synthesize.py subtitles.srt models/speaker_embedding.pkl
+```
+Этот скрипт синтезирует речь на основе субтитров из файла subtitles.srt и векторного представления из speaker_embedding.pkl.
